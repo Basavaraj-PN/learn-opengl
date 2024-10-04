@@ -27,7 +27,13 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include
 
 
 # Add source files
-set(SOURCE_FILES src/main.cpp) # Replace with your actual source files
+set(SOURCE_FILES src/main.cpp
+        src/Renderer.hpp
+        src/Renderer.cpp
+        src/VertexBuffer.hpp
+        src/VertexBuffer.cpp
+        src/IndexBuffer.cpp
+        src/IndexBuffer.hpp) # Replace with your actual source files
 
 # Create the executable
 add_executable(main ${SOURCE_FILES})
