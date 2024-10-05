@@ -33,7 +33,11 @@ set(SOURCE_FILES src/main.cpp
         src/VertexBuffer.hpp
         src/VertexBuffer.cpp
         src/IndexBuffer.cpp
-        src/IndexBuffer.hpp) # Replace with your actual source files
+        src/IndexBuffer.hpp
+        src/VertexArray.cpp
+        src/VertexArray.hpp
+        src/VertexBufferLayout.cpp
+        src/VertexBufferLayout.hpp) # Replace with your actual source files
 
 # Create the executable
 add_executable(main ${SOURCE_FILES})
