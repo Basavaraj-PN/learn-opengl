@@ -125,17 +125,13 @@ int main() {
     };
     {
 
-        unsigned int vao;
-        glGenVertexArrays(1, &vao);
-        glBindVertexArray(vao);
-
 
         VertexArray va;
-
-        VertexBuffer vb(vertices, 4 * 3 * sizeof(float));
+        VertexBuffer vb(vertices,   3* 4 * sizeof(float));
         VertexBufferLayout layout;
         layout.Push<float>(3);
         va.AddBuffer(vb, layout);
+
 //        glEnableVertexAttribArray(0);
 //        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
@@ -169,9 +165,9 @@ int main() {
             GLCall(glUniform4f(location, r, 0.0f, 0.0f, 1.0f));
 
             if (r > 1.0f)
-                increment = -0.05;
+                increment = -0.01;
             else if (r < 0.0f)
-                increment = 0.05f;
+                increment = 0.01f;
             r += increment;
 
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr)); // Correct function and parameters

@@ -5,7 +5,7 @@
 #include "VertexBufferLayout.hpp"
 
 VertexBufferLayout::VertexBufferLayout()
-    : m_Stride(0){
+        : m_Stride(0) {
 
 }
 
