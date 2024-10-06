@@ -1,8 +1,6 @@
-
-#include <glad/glad.h>
 #include <iostream>
+#include <glad/glad.h>
 #include "Renderer.hpp"
-
 #include "VertexBuffer.hpp"
 #include "IndexBuffer.hpp"
 #include "VertexArray.hpp"
@@ -71,19 +69,15 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
 
         GLCall(processInput(window));
-
         renderer.Clear();
         renderer.Draw(va, ib, shader);
-
         {
             const auto r = IncrementRedChannel();
             shader.SetUniform4f("u_Color", r, 1.0f - r, r, 1.0f);
         }
-
         GLCall(glfwSwapBuffers(window));
         GLCall(glfwPollEvents());
     }
-
 
     glfwTerminate();
     return 0;
@@ -91,12 +85,17 @@ int main() {
 
 float IncrementRedChannel() {
     static float r = 0.0f;
-    static float increment = 0.05f;
-    if (r > 1.0f)
-        increment = -0.01;
-    else if (r < 0.0f)
+    static float increment = 0.01f; // Consistent increment value
+
+    // Clamp the value within 0.0 and 1.0 and change direction at boundaries
+    if (r >= 1.0f) {
+        r = 1.0f;
+        increment = -0.01f;
+    } else if (r <= 0.0f) {
+        r = 0.0f;
         increment = 0.01f;
+    }
+
     r += increment;
     return r;
 }
-

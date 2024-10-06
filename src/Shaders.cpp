@@ -81,6 +81,7 @@ unsigned int Shader::CompileShader(unsigned int type, const std::string &source)
         glGetShaderInfoLog(id, length, nullptr, message.data());
         std::cout << "ERROR::SHADER::" << (type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT") << "::COMPILATION_FAILED\n"
                   << message.data() << std::endl;
+        glDeleteShader(id);
         return 0;
     }
     return id;
@@ -90,6 +91,12 @@ unsigned int Shader::CreateProgram(const std::string &vertexShaderSource, const 
     unsigned int program = glCreateProgram();
     unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShaderSource);
     unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
+
+    if (vs == 0 || fs == 0) {
+        std::cout << "ERROR::SHADER::" << (vs==GL_FALSE? "VERTEX" :  "FRAGMENT")<<std::endl;
+        glDeleteProgram(program);
+        return 0; // or handle error accordingly
+    }
 
     glAttachShader(program, vs);
     glAttachShader(program, fs);
