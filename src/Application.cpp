@@ -88,6 +88,7 @@ float IncrementRedChannel() {
     static float increment = 0.01f; // Consistent increment value
 
     // Clamp the value within 0.0 and 1.0 and change direction at boundaries
+    r += increment;
     if (r >= 1.0f) {
         r = 1.0f;
         increment = -0.01f;
@@ -96,6 +97,5 @@ float IncrementRedChannel() {
         increment = 0.01f;
     }
 
-    r += increment;
     return r;
 }
