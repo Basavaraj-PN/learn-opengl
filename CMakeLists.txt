@@ -27,7 +27,7 @@ target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include
 
 
 # Add source files
-set(SOURCE_FILES src/main.cpp
+set(SOURCE_FILES src/Application.cpp
         src/Renderer.hpp
         src/Renderer.cpp
         src/VertexBuffer.hpp
@@ -42,10 +42,10 @@ set(SOURCE_FILES src/main.cpp
         src/Shaders.hpp) # Replace with your actual source files
 
 # Create the executable
-add_executable(main ${SOURCE_FILES})
+add_executable(Application ${SOURCE_FILES})
 
 # Link libraries
-target_link_libraries(main OpenGL glfw glad GLEW)
+target_link_libraries(Application OpenGL glfw glad GLEW)
 
 # Include directories
-target_include_directories(main PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/include)
+target_include_directories(Application PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/include)

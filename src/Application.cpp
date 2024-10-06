@@ -8,6 +8,7 @@
 #include "VertexArray.hpp"
 #include "VertexBufferLayout.hpp"
 #include "Shaders.hpp"
+
 // settings
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -36,10 +37,10 @@ int main() {
     std::cout << glGetString(GL_VERSION) << std::endl;
 
     float vertices[] = {
-            0.5f, 0.5f, 0.0f,     0.0, 0.0, 1.0,
-            0.5f, -0.5f, 0.0f,     0.0, 0.0, 1.0,
-            -0.5f, -0.5f, 0.0f,    1.0, 0.0, 0.0,
-            -0.5f, 0.5f, 0.0f,     1.0, 0.0, 0.0
+            0.5f, 0.5f, 0.0f, 0.0, 0.0, 1.0,
+            0.5f, -0.5f, 0.0f, 0.0, 0.0, 1.0,
+            -0.5f, -0.5f, 0.0f, 1.0, 0.0, 0.0,
+            -0.5f, 0.5f, 0.0f, 1.0, 0.0, 0.0
     };
     unsigned int indices[] = {
             0, 1, 2,
