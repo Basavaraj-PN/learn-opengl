@@ -48,7 +48,7 @@ int main() {
     };
 
     VertexArray va;
-    VertexBuffer vb(vertices, sizeof(vertices));
+    VertexBuffer vb(vertices, 4 * 6 * sizeof(float));
     VertexBufferLayout layout;
     IndexBuffer ib(indices, 6);
 
