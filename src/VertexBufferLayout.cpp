@@ -30,3 +30,8 @@ void VertexBufferLayout::Push<unsigned char>(unsigned int count) {
     m_Elements.push_back({GL_UNSIGNED_BYTE, count, GL_TRUE});
     m_Stride += count * VertexBufferElement::GetSizeOfType(GL_UNSIGNED_BYTE);
 }
+
+template<class T>
+void Push(unsigned int count){
+    static_assert(false);
+}

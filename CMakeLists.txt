@@ -37,7 +37,9 @@ set(SOURCE_FILES src/main.cpp
         src/VertexArray.cpp
         src/VertexArray.hpp
         src/VertexBufferLayout.cpp
-        src/VertexBufferLayout.hpp) # Replace with your actual source files
+        src/VertexBufferLayout.hpp
+        src/Shaders.cpp
+        src/Shaders.hpp) # Replace with your actual source files
 
 # Create the executable
 add_executable(main ${SOURCE_FILES})
