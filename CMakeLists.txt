@@ -39,7 +39,11 @@ set(SOURCE_FILES src/Application.cpp
         src/VertexBufferLayout.cpp
         src/VertexBufferLayout.hpp
         src/Shaders.cpp
-        src/Shaders.hpp) # Replace with your actual source files
+        src/Shaders.hpp
+        src/vendor/stb_image/stb_image.h
+        src/vendor/stb_image/stb_image.cpp
+        src/Texture.cpp
+        src/Texture.hpp) # Replace with your actual source files
 
 # Create the executable
 add_executable(Application ${SOURCE_FILES})

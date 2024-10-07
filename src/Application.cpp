@@ -6,6 +6,7 @@
 #include "VertexArray.hpp"
 #include "VertexBufferLayout.hpp"
 #include "Shaders.hpp"
+#include "Texture.hpp"
 
 float IncrementRedChannel();
 
@@ -35,30 +36,36 @@ int main() {
     }
 
     std::cout << glGetString(GL_VERSION) << std::endl;
-
+    //3positions, 3colors, 2texture
     float vertices[] = {
-            0.5f, 0.5f, 0.0f, 0.0, 0.0, 1.0,
-            0.5f, -0.5f, 0.0f, 0.0, 0.0, 1.0,
-            -0.5f, -0.5f, 0.0f, 1.0, 0.0, 0.0,
-            -0.5f, 0.5f, 0.0f, 1.0, 0.0, 0.0
+            0.5f,  0.5f,  0.0f,  0.0, 0.0, 1.0,  0.0f, 0.0f,
+            0.5f,  -0.5f, 0.0f,  0.0, 0.0, 1.0,  1.0f, 0.0f,
+            -0.5f, -0.5f, 0.0f,  1.0, 0.0, 0.0,  1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f,  1.0, 0.0, 0.0,  0.0f, 1.0f,
     };
     unsigned int indices[] = {
             0, 1, 2,
             2, 3, 0
     };
 
+    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     VertexArray va;
-    VertexBuffer vb(vertices, 4 * 6 * sizeof(float));
+    VertexBuffer vb(vertices, 4 * 8 * sizeof(float));
     VertexBufferLayout layout;
     IndexBuffer ib(indices, 6);
 
     layout.Push<float>(3);
     layout.Push<float>(3);
+    layout.Push<float>(2);
     va.AddBuffer(vb, layout);
 
     Shader shader("../res/shaders/Basic.shader");
     shader.Bind();
     shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+    Texture texture("../res/texture/green.jpg");
+    texture.Bind();
+    shader.SetUniform1i("u_Texture", 0);
 
     va.Unbind();
     vb.Unbind();

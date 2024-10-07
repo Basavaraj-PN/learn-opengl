@@ -20,6 +20,11 @@ void Shader::Unbind() const {
     GLCall(glUseProgram(0));
 }
 
+void Shader::SetUniform1i(const std::string &name, float value) {
+
+    GLCall(glUniform1i(GetUniformLocation(name), value));
+}
+
 void Shader::SetUniform1f(const std::string &name, float value) {
 
     GLCall(glUniform1f(GetUniformLocation(name), value));
@@ -117,4 +122,5 @@ unsigned int Shader::CreateProgram(const std::string &vertexShaderSource, const 
     glDeleteShader(fs);
     return program;
 }
+
 
