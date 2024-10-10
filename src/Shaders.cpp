@@ -74,6 +74,12 @@ ShaderProgramSource Shader::ParseShader(const std::string &filepath) {
 }
 
 unsigned int Shader::CompileShader(unsigned int type, const std::string &source) {
+
+    if(source.empty()){
+        std::cout << "ERROR::SHADER::SOURCE_EMPTY" << std::endl;
+        return 0;
+    }
+
     unsigned int id = glCreateShader(type);
     const char *src = source.c_str();
     glShaderSource(id, 1, &src, nullptr);
