@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "Renderer.hpp"
+#include "GLUtils.hpp"
 
 struct VertexBufferElement {
     unsigned int type;

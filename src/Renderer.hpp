@@ -7,22 +7,9 @@
 
 #include "VertexArray.hpp"
 #include "IndexBuffer.hpp"
+#include "Shaders.hpp"
 
 class Shader;
-
-#define ASSERT(x) if (!(x)) raise(SIGTRAP);
-#define GLCall(x) GLClearError();\
-    x;\
-    ASSERT(GLLogCall(#x, __FILE__, __LINE__))
-
-void GLClearError();
-
-bool GLLogCall(const char *function, const char *file, int line);
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height);
-
-void processInput(GLFWwindow *window);
-
 
 class Renderer {
 

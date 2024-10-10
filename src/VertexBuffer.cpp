@@ -1,6 +1,6 @@
 #include "VertexBuffer.hpp"
 #include "Renderer.hpp"
-
+#include "GLUtils.hpp"
 
 VertexBuffer::VertexBuffer(const void *data, unsigned int size) {
     GLCall(glGenBuffers(1, &m_RenderId));

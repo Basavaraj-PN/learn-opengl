@@ -7,6 +7,7 @@
 #include "VertexBufferLayout.hpp"
 #include "Shaders.hpp"
 #include "Texture.hpp"
+#include "GLUtils.hpp"
 
 float IncrementRedChannel();
 
@@ -36,7 +37,7 @@ int main() {
     }
 
     std::cout << glGetString(GL_VERSION) << std::endl;
-    {
+
         //3positions, 3colors, 2texture
         float vertices[] = {
                 0.5f, 0.5f, 0.0f, 0.0, 0.0, 1.0, 0.0f, 0.0f,
@@ -86,7 +87,7 @@ int main() {
             GLCall(glfwSwapBuffers(window));
             GLCall(glfwPollEvents());
         }
-    }
+
     glfwTerminate();
     return 0;
 }

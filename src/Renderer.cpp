@@ -1,31 +1,7 @@
 #include <iostream>
 #include "Renderer.hpp"
 #include "Shaders.hpp"
-
-void GLClearError() {
-    while (glGetError() != GL_NO_ERROR);
-}
-
-bool GLLogCall(const char *function, const char *file, int line) {
-    while (GLenum error = glGetError()) {
-        std::cout << "[OpenGL Error] (" << error << "): " << function <<
-                  " " << file << ":" << line << std::endl;
-        return GL_FALSE;
-    }
-    return GL_TRUE;
-}
-
-void processInput(GLFWwindow *window) {
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS){
-        glfwSetWindowShouldClose(window, true);
-        std::cout << "Window Closed ..." << std::endl;
-    }
-}
-
-void framebuffer_size_callback(GLFWwindow *window, int width, int height) {
-    GLCall(glViewport(0, 0, width, height));
-}
-
+#include "GLUtils.hpp"
 
 void Renderer::Clear() const {
     GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));

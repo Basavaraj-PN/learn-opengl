@@ -1,6 +1,7 @@
 
 #include "Shaders.hpp"
 #include <vector>
+#include "GLUtils.hpp"
 
 Shader::Shader(const std::string &filepath) : m_RenderID(0), m_Filepath(filepath) {
 
