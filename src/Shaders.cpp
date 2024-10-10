@@ -113,7 +113,7 @@ unsigned int Shader::CreateProgram(const std::string &vertexShaderSource, const 
     glGetProgramiv(program, GL_LINK_STATUS, &result);
     if (result == GL_FALSE) {
         int length;
-        glGetShaderiv(program, GL_INFO_LOG_LENGTH, &length);
+        glGetProgramiv(program, GL_INFO_LOG_LENGTH, &length);
         std::vector<char> message(length);
         glGetProgramInfoLog(program, length, nullptr, message.data());
         std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n"
