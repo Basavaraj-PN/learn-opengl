@@ -1,6 +1,5 @@
+#pragma once
 
-#ifndef OPENGL_PROJECT_RENDERER_HPP
-#define OPENGL_PROJECT_RENDERER_HPP
 
 #include <csignal>
 #include <glad/glad.h>
@@ -32,7 +31,3 @@ public:
 
     void Draw(const VertexArray &va, const IndexBuffer &ib, const Shader &shader) const;
 };
-
-#endif //OPENGL_PROJECT_RENDERER_HPP
-
-

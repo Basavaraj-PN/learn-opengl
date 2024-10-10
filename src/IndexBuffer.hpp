@@ -1,6 +1,4 @@
-
-#ifndef OPENGL_PROJECT_INDEXBUFFER_HPP
-#define OPENGL_PROJECT_INDEXBUFFER_HPP
+#pragma once
 
 class IndexBuffer {
 private:
@@ -17,6 +15,3 @@ public:
 
     [[nodiscard]] inline unsigned int GetCount() const { return m_Count; };
 };
-
-
-#endif //OPENGL_PROJECT_INDEXBUFFER_HPP

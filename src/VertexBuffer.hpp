@@ -1,6 +1,4 @@
-
-#ifndef OPENGL_PROJECT_VERTEXBUFFER_HPP
-#define OPENGL_PROJECT_VERTEXBUFFER_HPP
+#pragma once
 
 class VertexBuffer {
 private:
@@ -15,4 +13,3 @@ public:
     void Unbind() const;
 };
 
-#endif //OPENGL_PROJECT_VERTEXBUFFER_HPP

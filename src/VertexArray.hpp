@@ -1,9 +1,4 @@
-//
-// Created by basavaraj on 10/5/24.
-//
-
-#ifndef OPENGL_PROJECT_VERTEXARRAY_HPP
-#define OPENGL_PROJECT_VERTEXARRAY_HPP
+#pragma once
 
 #include "VertexBuffer.hpp"
 
@@ -24,5 +19,3 @@ public:
     void Unbind() const;
 };
 
-
-#endif //OPENGL_PROJECT_VERTEXARRAY_HPP

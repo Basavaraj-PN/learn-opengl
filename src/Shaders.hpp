@@ -1,6 +1,4 @@
-
-#ifndef OPENGL_PROJECT_SHADERS_HPP
-#define OPENGL_PROJECT_SHADERS_HPP
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -42,5 +40,3 @@ public:
 
     unsigned int CreateProgram(const std::string &vertexShaderSource, const std::string &fragmentShaderSource);
 };
-
-#endif //OPENGL_PROJECT_SHADERS_HPP

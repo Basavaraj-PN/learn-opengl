@@ -1,9 +1,4 @@
-//
-// Created by basavaraj on 10/5/24.
-//
-
-#ifndef OPENGL_PROJECT_VERTEXBUFFERLAYOUT_HPP
-#define OPENGL_PROJECT_VERTEXBUFFERLAYOUT_HPP
+#pragma once
 
 #include <vector>
 #include "Renderer.hpp"
@@ -47,5 +42,3 @@ public:
 
     inline unsigned int GetStride() const { return m_Stride; }
 };
-
-#endif //OPENGL_PROJECT_VERTEXBUFFERLAYOUT_HPP

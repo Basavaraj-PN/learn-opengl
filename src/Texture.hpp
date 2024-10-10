@@ -1,6 +1,5 @@
+#pragma once
 
-#ifndef OPENGL_PROJECT_TEXTURE_HPP
-#define OPENGL_PROJECT_TEXTURE_HPP
 
 #include "Renderer.hpp"
 #include <iostream>
@@ -26,5 +25,3 @@ public:
 
     [[nodiscard]] inline int GetHeight() const { return m_Height; }
 };
-
-#endif //OPENGL_PROJECT_TEXTURE_HPP
