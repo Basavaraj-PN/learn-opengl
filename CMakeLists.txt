@@ -1,55 +1,87 @@
-cmake_minimum_required(VERSION 3.10)
-project(OpenGL_Project)
+# Get CMake PreDefined Variables https://cmake.org/cmake/help/latest/manual/cmake-variables.7.html
+# This CMake File for OpenGL Projects is compiled by Kushagra
+# I do not claim that this is the best CMake Configuration you will get but it does work.
 
-# Set the C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
+cmake_minimum_required(VERSION 3.10.0 FATAL_ERROR)
 
-# Set policy for OpenGL GLVND
-if (POLICY CMP0072)
-    cmake_policy(SET CMP0072 NEW)  # Prefer GLVND
+project(Application)
+
+# Set the policy to use the modern GLVND libraries
+if(POLICY CMP0072)
+    cmake_policy(SET CMP0072 NEW)
 endif()
 
-# Find GLFW package
-find_package(glfw3 REQUIRED)
-include_directories(${GLFW_INCLUDE_DIRS})
+# Set the C++ standard to C++17
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)  # Disable compiler-specific extensions
 
-# Find GLEW package
-find_package(GLEW REQUIRED)
-include_directories(${GLEW_INCLUDE_DIRS})
+# Add all Source Files
+file(GLOB_RECURSE SOURCE_FILES
+        ${CMAKE_SOURCE_DIR}/src/*.cpp
+)
 
+# Add all Header Files
+file(GLOB_RECURSE HEADER_FILES
+        ${CMAKE_SOURCE_DIR}/src/*.h
+        ${CMAKE_SOURCE_DIR}/src/*.hpp
+)
+
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
+
+
+# Find the Required Packages (if Any -> OpenGL/Vulkan or Any)
 find_package(OpenGL REQUIRED)
-include_directories( ${OPENGL_INCLUDE_DIRS} )
 
-# Add GLAD
-add_library(glad ${CMAKE_SOURCE_DIR}/external/glad/src/glad.c)
-target_include_directories(glad PUBLIC ${CMAKE_SOURCE_DIR}/external/glad/include)
+# Variable for the Libs to add to the Linkers
+if (WIN32)
+    set(LIBS glfw opengl32 glad)
+elseif (UNIX)
+    set(LIBS glfw GL glad)
+endif ()
+
+# Variables for Paths of External Libraries
+set(GLFW_ROOT_DIR external/glfw)
+set(GLAD_ROOT_DIR external/glad)
 
 
-# Add source files
-set(SOURCE_FILES src/Application.cpp
-        src/Renderer.hpp
-        src/Renderer.cpp
-        src/VertexBuffer.hpp
-        src/VertexBuffer.cpp
-        src/IndexBuffer.cpp
-        src/IndexBuffer.hpp
-        src/VertexArray.cpp
-        src/VertexArray.hpp
-        src/VertexBufferLayout.cpp
-        src/VertexBufferLayout.hpp
-        src/Shaders.cpp
-        src/Shaders.hpp
-        src/vendor/stb_image/stb_image.h
-        src/vendor/stb_image/stb_image.cpp
-        src/Texture.cpp
-        src/Texture.hpp) # Replace with your actual source files
+# Add the External Libraries / Files Directory
+add_subdirectory(${GLFW_ROOT_DIR})
+add_subdirectory(${GLAD_ROOT_DIR})
 
-# Create the executable
-add_executable(Application ${SOURCE_FILES})
+# Add the Include Directories for the Libraries / Files
+#Used for adding #include into the cpp files
 
-# Link libraries
-target_link_libraries(Application OpenGL glfw glad GLEW)
+#		Include Files From Within the Workspace Folder
 
-# Include directories
-target_include_directories(Application PRIVATE ${CMAKE_SOURCE_DIR}/external/glad/include)
+target_include_directories(${PROJECT_NAME}
+        PUBLIC ${GLFW_ROOT_DIR}/include
+        PUBLIC ${GLAD_ROOT_DIR}/include/glad
+)
+
+#		Include Files from Outside the Workspace Folder -> Like Vulkan SDK
+
+#target_include_directories(${PROJECT_NAME}
+#	PRIVATE ${Vulkan_INCLUDE_DIRS}
+#)
+
+# Add the Link Directories for the Libraries / Files
+#Used for creation of Static/Dynamic Libraries
+
+#		Include Files From Within the Workspace Folder
+
+target_link_directories(${PROJECT_NAME}
+        PRIVATE ${GLFW_ROOT_DIR}/src
+        PRIVATE ${GLAD_ROOT_DIR}/src}
+)
+
+# Add the Libs to the Linker for the Project
+
+target_link_libraries(${PROJECT_NAME} ${LIBS})
+
+# EXPLANATION FOR SOME STUFF
+
+# GLOB_RECURSE -> Recursively go through all subdirectories
+#		of the given path and get all the files matching the extension provided
+# file() -> Store the Files matching the RegEx into a variable
+# set() -> Alternative to file() if you want to set variables for a custom behaviour
