@@ -99,7 +99,7 @@ unsigned int Shader::CreateProgram(const std::string &vertexShaderSource, const 
     unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShaderSource);
 
     if (vs == 0 || fs == 0) {
-        std::cout << "ERROR::SHADER::" << (vs==GL_FALSE? "VERTEX" :  "FRAGMENT")<<std::endl;
+        std::cout << "ERROR::SHADER::" << (vs==0? "VERTEX" :  "FRAGMENT")<<std::endl;
         glDeleteProgram(program);
         return 0; // or handle error accordingly
     }
