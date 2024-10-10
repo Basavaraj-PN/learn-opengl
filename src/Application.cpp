@@ -36,56 +36,57 @@ int main() {
     }
 
     std::cout << glGetString(GL_VERSION) << std::endl;
-    //3positions, 3colors, 2texture
-    float vertices[] = {
-            0.5f,  0.5f,  0.0f,  0.0, 0.0, 1.0,  0.0f, 0.0f,
-            0.5f,  -0.5f, 0.0f,  0.0, 0.0, 1.0,  1.0f, 0.0f,
-            -0.5f, -0.5f, 0.0f,  1.0, 0.0, 0.0,  1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f,  1.0, 0.0, 0.0,  0.0f, 1.0f,
-    };
-    unsigned int indices[] = {
-            0, 1, 2,
-            2, 3, 0
-    };
+    {
+        //3positions, 3colors, 2texture
+        float vertices[] = {
+                0.5f, 0.5f, 0.0f, 0.0, 0.0, 1.0, 0.0f, 0.0f,
+                0.5f, -0.5f, 0.0f, 0.0, 0.0, 1.0, 1.0f, 0.0f,
+                -0.5f, -0.5f, 0.0f, 1.0, 0.0, 0.0, 1.0f, 1.0f,
+                -0.5f, 0.5f, 0.0f, 1.0, 0.0, 0.0, 0.0f, 1.0f,
+        };
+        unsigned int indices[] = {
+                0, 1, 2,
+                2, 3, 0
+        };
 
-    GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-    VertexArray va;
-    VertexBuffer vb(vertices, 4 * 8 * sizeof(float));
-    VertexBufferLayout layout;
-    IndexBuffer ib(indices, 6);
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        VertexArray va;
+        VertexBuffer vb(vertices, 4 * 8 * sizeof(float));
+        VertexBufferLayout layout;
+        IndexBuffer ib(indices, 6);
 
-    layout.Push<float>(3);
-    layout.Push<float>(3);
-    layout.Push<float>(2);
-    va.AddBuffer(vb, layout);
+        layout.Push<float>(3);
+        layout.Push<float>(3);
+        layout.Push<float>(2);
+        va.AddBuffer(vb, layout);
 
-    Shader shader("../res/shaders/Basic.shader");
-    shader.Bind();
-    shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+        Shader shader("../res/shaders/Basic.shader");
+        shader.Bind();
+        shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
-    Texture texture("../res/texture/green.jpg");
-    texture.Bind();
-    shader.SetUniform1i("u_Texture", 0);
+        Texture texture("../res/texture/green.jpg");
+        texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
 
-    va.Unbind();
-    vb.Unbind();
-    ib.Unbind();
-    shader.Unbind();
+        va.Unbind();
+        vb.Unbind();
+        ib.Unbind();
+        shader.Unbind();
 
-    Renderer renderer;
-    while (!glfwWindowShouldClose(window)) {
+        Renderer renderer;
+        while (!glfwWindowShouldClose(window)) {
 
-        GLCall(processInput(window));
-        renderer.Clear();
-        renderer.Draw(va, ib, shader);
-        {
-            const auto r = IncrementRedChannel();
-            shader.SetUniform4f("u_Color", r, 1.0f - r, r, 1.0f);
+            GLCall(processInput(window));
+            renderer.Clear();
+            renderer.Draw(va, ib, shader);
+            {
+                const auto r = IncrementRedChannel();
+                shader.SetUniform4f("u_Color", r, 1.0f - r, r, 1.0f);
+            }
+            GLCall(glfwSwapBuffers(window));
+            GLCall(glfwPollEvents());
         }
-        GLCall(glfwSwapBuffers(window));
-        GLCall(glfwPollEvents());
     }
-
     glfwTerminate();
     return 0;
 }
