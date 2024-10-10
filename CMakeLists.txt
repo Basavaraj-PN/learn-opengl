@@ -48,7 +48,13 @@ target_include_directories(${PROJECT_NAME}
 )
 
 # Add the Libs to the Linker for the Project
-target_link_libraries(${PROJECT_NAME} glfw glad OpenGL::GL)
+# Platform-specific linking
+if (WIN32)
+    target_link_libraries(${PROJECT_NAME} glfw glad OpenGL::GL opengl32)
+elseif (UNIX)
+    target_link_libraries(${PROJECT_NAME} glfw glad OpenGL::GL)
+endif ()
+
 
 # EXPLANATION FOR SOME STUFF
 # GLOB_RECURSE -> Recursively go through all subdirectories
