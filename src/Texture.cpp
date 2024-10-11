@@ -3,7 +3,7 @@
 //
 
 #include "Texture.hpp"
-#include "vendor/stb_image/stb_image.h"
+#include "stb_image/stb_image.h"
 #include "GLUtils.hpp"
 
 Texture::Texture(const std::string &filepath)
