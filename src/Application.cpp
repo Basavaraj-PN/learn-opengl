@@ -60,7 +60,7 @@ int main() {
         layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
-        Shader shader("../res/shaders/Basic.shader");
+        Shader shader("../res/shaders/Basic.glsl");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
