@@ -1,16 +1,17 @@
 #shader vertex
 #version 330 core
 
-layout (location = 0) in vec4 aPos;
+layout (location = 0) in vec4 position;
 layout (location = 1) in vec3 color;
 layout (location = 2) in vec2 texCoord;
 
 out vec3 outColor;
 out vec2 v_TextCoord;
+uniform mat4 u_MVP;
 
 void main()
 {
-   gl_Position = aPos;
+   gl_Position = position * u_MVP;
    outColor = color;
    v_TextCoord = texCoord;
 };
@@ -29,5 +30,5 @@ uniform sampler2D u_Texture;
 void main()
 {
    vec4 texColor = texture(u_Texture, v_TextCoord);
-   color = vec4(outColor, 1.0) / u_Color * texColor;
+   color = vec4(outColor, 1.0) / u_Color ;
 };

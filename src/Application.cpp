@@ -8,6 +8,8 @@
 #include "Shaders.hpp"
 #include "Texture.hpp"
 #include "GLUtils.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 float IncrementRedChannel();
 
@@ -55,6 +57,8 @@ int main() {
         VertexBufferLayout layout;
         IndexBuffer ib(indices, 6);
 
+        glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f);
+
         layout.Push<float>(3);
         layout.Push<float>(3);
         layout.Push<float>(2);
@@ -63,6 +67,7 @@ int main() {
         Shader shader("../res/shaders/Basic.glsl");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+        shader.SetUniformMat4f("u_MVP", proj);
 
         Texture texture("../res/texture/green.jpg");
         texture.Bind();

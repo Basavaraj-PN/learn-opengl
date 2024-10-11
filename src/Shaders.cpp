@@ -30,6 +30,10 @@ void Shader::SetUniform1f(const std::string &name, float value) {
 
     GLCall(glUniform1f(GetUniformLocation(name), value));
 }
+void Shader::SetUniformMat4f(const std::string &name, glm::mat4 &matrix) {
+    glUniformMatrix4fv(GetUniformLocation(name), 1, GL_FALSE, &matrix[0][0]);
+}
+
 
 void Shader::SetUniform4f(const std::string &name, float v0, float v1, float v2, float v3) {
 
@@ -129,5 +133,6 @@ unsigned int Shader::CreateProgram(const std::string &vertexShaderSource, const 
     glDeleteShader(fs);
     return program;
 }
+
 
 
