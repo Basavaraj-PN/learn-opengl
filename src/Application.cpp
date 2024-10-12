@@ -72,9 +72,7 @@ int main() {
         IndexBuffer ib(indices, 6);
 
         glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 
-        glm::mat4 mvp = proj * view;
 
         layout.Push<float>(3);
         layout.Push<float>(3);
@@ -84,7 +82,7 @@ int main() {
         Shader shader("../res/shaders/Basic.glsl");
         shader.Bind();
         shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", mvp);
+
 
         Texture texture("../res/texture/green.jpg");
         texture.Bind();
@@ -110,11 +108,9 @@ int main() {
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init(glsl_version);
 
-        bool show_demo_window = true;
-        bool show_another_window = false;
-        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
 
+        glm::vec3 translation(0.0f, 0.0f, 0.0f);
         while (!glfwWindowShouldClose(window)) {
 
             GLCall(processInput(window));
@@ -124,33 +120,18 @@ int main() {
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
+            glm::mat4 view = glm::translate(glm::mat4(1.0f), translation);
+            glm::mat4 mvp = proj * view;
+            shader.SetUniformMat4f("u_MVP", mvp);
+
             {
-                static float f = 0.0f;
-                static int counter = 0;
-
-                ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-                ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-                ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
-                ImGui::Checkbox("Another Window", &show_another_window);
-
-                ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-                ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
-
-                if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                    counter++;
-                ImGui::SameLine();
-                ImGui::Text("counter = %d", counter);
-
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
+                ImGui::Begin("AVG. FRAME RATE");                          // Create a window called "Hello, world!" and append into it.
+                ImGui::Text("[%.3f ms], [%.1f FPS]", 1000.0f / io.Framerate, io.Framerate);
+                ImGui::SliderFloat3("Translation", &translation[0], -1.0f, 1.0f);
                 ImGui::End();
             }
 
-
             renderer.Draw(va, ib, shader);
-            view = glm::translate(glm::mat4(1.0f), glm::vec3(std::sin(glfwGetTime()), std::cos(glfwGetTime()), std::sin(glfwGetTime())));
-            mvp = proj * view;
-            shader.SetUniformMat4f("u_MVP", mvp);
             {
                 const auto r = IncrementRedChannel();
                 shader.SetUniform4f("u_Color", r, r, r, 1.0f);
