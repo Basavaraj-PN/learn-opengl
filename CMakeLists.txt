@@ -20,11 +20,13 @@ set(CMAKE_CXX_EXTENSIONS OFF)  # Disable compiler-specific extensions
 include_directories(
         src
         src/vendor  # Add this line
+        src/vendor
 )
 
 # Add all Source Files
 file(GLOB_RECURSE SOURCE_FILES
         ${CMAKE_SOURCE_DIR}/src/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/vendor/imgui/*.cpp
 )
 
 # Add all Header Files
@@ -37,6 +39,8 @@ add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
 # Find the Required Packages
 find_package(OpenGL REQUIRED)
+
+
 
 # Variables for Paths of External Libraries
 set(GLFW_ROOT_DIR external/glfw)
@@ -51,6 +55,7 @@ add_subdirectory(${GLAD_ROOT_DIR})
 target_include_directories(${PROJECT_NAME}
         PUBLIC ${GLFW_ROOT_DIR}/include
         PUBLIC ${GLAD_ROOT_DIR}/include/glad
+
 )
 
 # Add the Libs to the Linker for the Project
