@@ -17,6 +17,7 @@
 
 
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
+
 float IncrementRedChannel();
 
 int main() {
@@ -24,13 +25,13 @@ int main() {
     if (!glfwInit())
         return 1;
 
-    const char* glsl_version = "#version 130";
+    const char *glsl_version = "#version 130";
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    const unsigned int SCR_WIDTH = 800;
-    const unsigned int SCR_HEIGHT = 600;
+    float SCR_WIDTH = 800.0f;
+    float SCR_HEIGHT = 600.0f;
 
     GLFWwindow *window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", nullptr, nullptr);
     if (window == nullptr) {
@@ -71,7 +72,7 @@ int main() {
         VertexBufferLayout layout;
         IndexBuffer ib(indices, 6);
 
-        glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+//        glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 
 
         layout.Push<float>(3);
@@ -100,7 +101,8 @@ int main() {
         // Setup Dear ImGui context
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
+        ImGuiIO &io = ImGui::GetIO();
+        (void) io;
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
         io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
         // Setup Dear ImGui style
@@ -109,8 +111,9 @@ int main() {
         ImGui_ImplOpenGL3_Init(glsl_version);
 
 
-
-        glm::vec3 translation(0.0f, 0.0f, 0.0f);
+        glm::vec3 translation(0.0f, 0.0f, -3.0f);
+        float angle{};
+        float mouse_wheel = -3.0f;
         while (!glfwWindowShouldClose(window)) {
 
             GLCall(processInput(window));
@@ -120,14 +123,39 @@ int main() {
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
 
-            glm::mat4 view = glm::translate(glm::mat4(1.0f), translation);
-            glm::mat4 mvp = proj * view;
+
+            glm::mat4 model = glm::mat4(1.0f); // make sure to initialize matrix to identity matrix first
+            glm::mat4 view = glm::mat4(1.0f);
+            glm::mat4 projection = glm::mat4(1.0f);
+
+
+            model = glm::rotate(model, glm::radians(angle), glm::vec3(0.0f, 1.0f, 0.0f));
+            view = glm::translate(view, translation);
+            projection = glm::perspective(glm::radians(45.0f), (float) SCR_WIDTH / (float) SCR_HEIGHT, 0.1f, 100.0f);
+
+            glm::mat4 mvp = projection * view * model;
             shader.SetUniformMat4f("u_MVP", mvp);
 
             {
-                ImGui::Begin("AVG. FRAME RATE");                          // Create a window called "Hello, world!" and append into it.
+                ImGui::Begin(
+                        "AVG. FRAME RATE");                          // Create a window called "Hello, world!" and append into it.
                 ImGui::Text("[%.3f ms], [%.1f FPS]", 1000.0f / io.Framerate, io.Framerate);
-                ImGui::SliderFloat3("Translation", &translation[0], -1.0f, 1.0f);
+                ImGui::SliderFloat2("Translate", glm::value_ptr(translation), -1.0f, 1.0f);
+//                ImGui::SliderFloat("Depth", &depth, -200.0f, 0.1f);
+                ImGui::SliderFloat("Rotate", &angle, 0.0f, 360.0f);
+
+                mouse_wheel +=  0.25 *  io.MouseWheel;
+
+                translation.z = mouse_wheel;
+
+                if (ImGui::Button("Rest")) {
+                    angle = 0.0f;
+                    translation.x = 0.0f;
+                    translation.y = 0.0f;
+                    translation.z = -3.0f;
+                    translation.z = -3.0f;
+                }
+
                 ImGui::End();
             }
 
@@ -142,7 +170,7 @@ int main() {
             GLCall(glfwSwapBuffers(window));
             GLCall(glfwPollEvents());
         }
-}
+    }
     // Cleanup
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
