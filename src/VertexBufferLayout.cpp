@@ -33,5 +33,6 @@ void VertexBufferLayout::Push<unsigned char>(unsigned int count) {
 
 template<class T>
 void Push(unsigned int count){
-    static_assert(false);
+//    static_assert(false);
+    static_assert(std::is_integral<T>::value, "Push only supports integral types.");
 }
