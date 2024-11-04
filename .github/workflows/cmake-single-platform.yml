@@ -25,7 +25,7 @@ jobs:
         submodules: true  
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y libgl1-mesa-dev wayland-protocols libwayland-dev libxkbcommon-dev libxrandr-dev libxinerama-dev libxcursor-dev
+      run: sudo apt-get update && sudo apt-get install -y ubuntu-desktop libgl1-mesa-dev wayland-protocols libwayland-dev libxkbcommon-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
